@@ -31,11 +31,6 @@ public class UserPrincipal implements UserDetails {
         );
  */
 
-        for (GrantedAuthority role :
-                grantedAuthorities) {
-            System.out.println(role);
-        }
-
         return grantedAuthorities;
     }
 
