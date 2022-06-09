@@ -16,11 +16,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // authorization
                 .antMatchers("/admin/**").hasAuthority("Admin")
-                .antMatchers("/manager/**").hasAuthority("Manager")
-                .antMatchers("/employee/**").hasAnyAuthority("Employee")
+                .antMatchers("/manager/**").hasAnyAuthority("Admin", "Manager")
+                .antMatchers("/employee/**").hasAnyAuthority("Admin", "Employee")
                 .antMatchers(
                         "/",
                         "/login",
+                        "/welcome",
                         "/fragments/**",
                         "/assets/**",
                         "/images/**"

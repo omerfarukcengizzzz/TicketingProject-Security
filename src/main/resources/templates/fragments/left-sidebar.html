@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <body>
 
@@ -24,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav flex-column">
                 <li class="nav-divider"></li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasAnyAuthority('Admin')">
                   <a
                     class="nav-link active"
                     href="#"
@@ -37,12 +38,12 @@
                   >
                   <div id="submenu-1" class="collapse submenu" style="">
                     <ul class="nav flex-column">
-                      <li class="nav-item">
+                      <li class="nav-item" sec:authorize="hasAuthority('Admin')">
                         <a class="nav-link" th:href="@{/admin/user-create}"
                           >User Create</a
                         >
                       </li>
-                      <li class="nav-item">
+                      <li class="nav-item" sec:authorize="hasAnyAuthority('Admin')">
                         <a class="nav-link" th:href="@{/admin/project-create}"
                           >Project Create</a
                         >
@@ -51,7 +52,7 @@
                   </div>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Manager')">
                   <a
                     class="nav-link"
                     href="#"
@@ -78,7 +79,7 @@
                   </div>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Employee')">
                   <a
                     class="nav-link"
                     href="#"
