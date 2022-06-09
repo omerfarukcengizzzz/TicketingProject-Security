@@ -14,6 +14,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SecurityService securityService;
+    @Autowired
+    private AuthSuccessHandler authSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,7 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/welcome")
+                //.defaultSuccessUrl("/welcome")
+                .successHandler(authSuccessHandler)
                 .failureUrl("/login?error=true")
                 .permitAll()
                 // logout
