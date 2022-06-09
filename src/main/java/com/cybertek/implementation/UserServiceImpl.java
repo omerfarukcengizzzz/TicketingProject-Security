@@ -16,6 +16,7 @@ import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +37,8 @@ public class UserServiceImpl implements UserService {
     private ProjectRepository projectRepository;
     @Autowired
     private MapperUtil mapperUtil;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDTO> listAllUsers() {
@@ -56,6 +59,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserDTO dto) {
         User user = mapperUtil.convert(dto, new User());
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        dto.setEnabled(true);
+
         userRepository.save(user);
     }
 
