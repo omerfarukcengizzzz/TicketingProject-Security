@@ -1,5 +1,7 @@
 package com.cybertek.config;
 
+import com.cybertek.service.SecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,6 +11,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private SecurityService securityService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -26,8 +31,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/assets/**",
                         "/images/**"
                 ).permitAll()
-                .and()
                 // login
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/welcome")
@@ -38,7 +43,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout=true")
-                .permitAll();
+                .permitAll()
+                // remember me
+                .and()
+                .rememberMe()
+                .tokenValiditySeconds(120)
+                .key("CybertekSecret")
+                .userDetailsService(securityService);
 
 
     }
