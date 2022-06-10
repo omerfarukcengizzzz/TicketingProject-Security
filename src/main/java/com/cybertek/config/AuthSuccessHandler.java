@@ -18,6 +18,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities()); // it gets the roles from the GrantedAuthority class which we added from UserPrincipal class
 
+        // redirect to a controller based on the role
         if (roles.contains("Admin")) {
             response.sendRedirect("/admin/user-create");
         }
