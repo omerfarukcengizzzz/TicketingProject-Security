@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 //.defaultSuccessUrl("/welcome")
-                .successHandler(authSuccessHandler)
+                .successHandler(authSuccessHandler) // the landing page is defined in the AuthSuccessHandler class for each role type
                 .failureUrl("/login?error=true")
                 .permitAll()
                 // logout
