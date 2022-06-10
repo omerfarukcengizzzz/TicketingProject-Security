@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMe()
                 .tokenValiditySeconds(120)
                 .key("CybertekSecret")
-                .userDetailsService(securityService);
+                .userDetailsService(securityService);   // it will create a remember-me cookie based on the user returned from this class
 
 
     }
