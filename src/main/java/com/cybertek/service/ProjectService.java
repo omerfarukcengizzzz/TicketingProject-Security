@@ -23,4 +23,6 @@ public interface ProjectService {
 
     List<ProjectDTO> listAllProjectsByManager(UserDTO manager);
 
+    List<ProjectDTO> listAllProjectDetails();
+
 }
