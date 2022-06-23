@@ -14,6 +14,7 @@ import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
     private TaskService taskService;
     @Autowired
     private TaskRepository taskRepository;
+    @Lazy
     @Autowired
     private UserService userService;
 
