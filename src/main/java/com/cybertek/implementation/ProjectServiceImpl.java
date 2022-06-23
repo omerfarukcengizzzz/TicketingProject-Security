@@ -12,8 +12,10 @@ import com.cybertek.repository.ProjectRepository;
 import com.cybertek.repository.TaskRepository;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
+import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +34,8 @@ public class ProjectServiceImpl implements ProjectService {
     private TaskService taskService;
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private UserService userService;
 
     @Override
     public ProjectDTO getByProjectCode(String code) {
@@ -86,6 +90,39 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDTO> listAllProjectsByManager(UserDTO manager) {
+        User user = userMapper.convertToEntity(manager);
+
+        List<Project> projectList = projectRepository.findByAssignedManager(user);
+
+        return projectList.stream()
+                .map(project -> {
+
+                    List<Task> taskList = taskRepository.findAllByProject(project);
+
+                    outer : for (Task task : taskList) {
+                        if (task.getStatus() != Status.COMPLETED) {
+                            project.setStatus(Status.OPEN);
+                            save(projectMapper.convertToDTO(project));
+                            break outer;
+                        }
+                    }
+
+                    ProjectDTO projectDTO = projectMapper.convertToDTO(project);
+
+                    projectDTO.setCompletedTasks(taskService.totalCompletedTasks(project.getProjectCode()));
+                    projectDTO.setUnfinishedTasks(taskService.totalNonCompletedTasks(project.getProjectCode()));
+
+                    return projectDTO;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProjectDTO> listAllProjectDetails() {
+        String managerUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        UserDTO manager = userService.findByUserName(managerUsername);
+
         User user = userMapper.convertToEntity(manager);
 
         List<Project> projectList = projectRepository.findByAssignedManager(user);
