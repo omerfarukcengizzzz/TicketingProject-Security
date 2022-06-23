@@ -13,6 +13,7 @@ import com.cybertek.repository.TaskRepository;
 import com.cybertek.repository.UserRepository;
 import com.cybertek.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -119,7 +120,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllTasksByStatusIsNot(Status status) {
-        User employee = userRepository.findByUserName("employee@gmail.com");
+        String employeeUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User employee = userRepository.findByUserName(employeeUsername);
 
         List<Task> taskList = taskRepository.findAllByStatusIsNotAndAssignedEmployee(status, employee);
 
@@ -130,7 +133,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllTasksByProjectManager() {
-        User manager = userRepository.findByUserName("omer@gmail.com");
+        String managerUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User manager = userRepository.findByUserName(managerUsername);
         List<Task> taskList = taskRepository.findAllByProjectAssignedManager(manager);
 
         return taskList.stream()
@@ -160,7 +165,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllByStatusIsCompleted() {
-        User employee = userRepository.findByUserName("employee@gmail.com");
+        String employeeUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User employee = userRepository.findByUserName(employeeUsername);
 
         List<Task> taskList = taskRepository.findAllByStatusIsAndAssignedEmployee(Status.COMPLETED, employee);
 
