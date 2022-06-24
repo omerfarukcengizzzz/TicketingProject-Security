@@ -142,7 +142,7 @@
                                                     <label>Choose a Role</label>
                                                     <select class="custom-select" th:field="*{role}" required>
                                                         <option th:each="r : ${roleList}" th:value="${r.id}"
-                                                                th:text="${r.description}"></option>
+                                                                th:text="${r.description}" th:selected="(${r.id} == *{role.id})"></option>
                                                                 <!-- since we spring could find and select the role with the help of th:field, we don't need to use this code
                                                                 th:selected="${r.id} == ${user.role.id}"-->
                                                     </select>
