@@ -77,6 +77,9 @@ public class UserServiceImpl implements UserService {
         // set id on entityUser
         entityUser.setId(user.getId());
 
+        // encode password
+        entityUser.setPassword(passwordEncoder.encode(user.getPassword()));
+
         // save updated user
         userRepository.save(entityUser);
 
