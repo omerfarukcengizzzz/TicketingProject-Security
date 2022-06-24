@@ -80,6 +80,9 @@ public class UserServiceImpl implements UserService {
         // encode password
         entityUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        // set isEnabled()
+        entityUser.setEnabled(true);
+
         // save updated user
         userRepository.save(entityUser);
 
