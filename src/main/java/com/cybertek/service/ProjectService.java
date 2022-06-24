@@ -4,6 +4,7 @@ import com.cybertek.dto.ProjectDTO;
 import com.cybertek.dto.UserDTO;
 import com.cybertek.entity.Project;
 import com.cybertek.entity.User;
+import com.cybertek.enums.Status;
 
 import java.util.List;
 
@@ -24,5 +25,7 @@ public interface ProjectService {
     List<ProjectDTO> listAllProjectsByManager(UserDTO manager);
 
     List<ProjectDTO> listAllProjectDetails();
+
+    List<ProjectDTO> listAllNotCompletedProjects();
 
 }
