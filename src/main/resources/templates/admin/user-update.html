@@ -140,7 +140,7 @@
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label>Choose a Role</label>
-                                                    <select class="custom-select" th:field="*{role}" required>
+                                                    <select name="role" class="custom-select" required> <!-- th:field and th:selected does not work at the same time, so we set the field name with name attribute -->
                                                         <option th:each="r : ${roleList}" th:value="${r.id}"
                                                                 th:text="${r.description}" th:selected="(${r.id} == *{role.id})"></option>
                                                                 <!-- since we spring could find and select the role with the help of th:field, we don't need to use this code
