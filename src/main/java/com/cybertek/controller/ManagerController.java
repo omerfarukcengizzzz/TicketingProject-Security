@@ -8,6 +8,7 @@ import com.cybertek.service.ProjectService;
 import com.cybertek.service.TaskService;
 import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -82,7 +83,11 @@ public class ManagerController {
     @GetMapping("/project-status")
     public String getProjectStatus(Model model){
 
-        List<ProjectDTO> projectList = projectService.listAllProjectDetails();
+//        List<ProjectDTO> projectList = projectService.listAllProjectDetails();
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDTO manager = userService.findByUserName(username);
+        List<ProjectDTO> projectList = projectService.listAllProjectsByManager(manager);
 
         model.addAttribute("projectList", projectList);
 
