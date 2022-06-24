@@ -35,7 +35,7 @@ public class ManagerController {
     public String createTask(Model model) {
 
         model.addAttribute("task", new TaskDTO());
-        model.addAttribute("projectList", projectService.listAllProjects());
+        model.addAttribute("projectList", projectService.listAllNotCompletedProjects());
         model.addAttribute("employeeList", userService.listAllByRole("employee"));
         model.addAttribute("taskList", taskService.listAllTasks());
 
@@ -64,7 +64,7 @@ public class ManagerController {
     public String editTask(@PathVariable("id") Long id, Model model) {
 
         model.addAttribute("task", taskService.findById(id));
-        model.addAttribute("projectList", projectService.listAllProjects());
+        model.addAttribute("projectList", projectService.listAllNotCompletedProjects());
         model.addAttribute("employeeList", userService.listAllByRole("employee"));
         model.addAttribute("taskList", taskService.listAllTasks());
 

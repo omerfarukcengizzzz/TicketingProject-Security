@@ -39,7 +39,7 @@ public class EmployeeController {
 
         model.addAttribute("task", taskService.findById(id));
         model.addAttribute("taskList", taskService.listAllTasksByStatusIsNot(Status.COMPLETED));
-        model.addAttribute("projectList", projectService.listAllProjects());
+        model.addAttribute("projectList", projectService.listAllNotCompletedProjects());
         model.addAttribute("employeeList", userService.listAllByRole("employee"));
         model.addAttribute("statusList", Status.values());
 
